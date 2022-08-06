@@ -102,7 +102,19 @@ function viewRoles() {
 
 function viewEmployees() {
     console.log('Displaying employees \n')
-    const sql = `SELECT employee.id as 'Employee ID', employee.firstName as 'First Name', employee.lastName as 'Last Name', employee.roleID as 'Role ID', employee.deptID as 'Department ID', employee.managerID as 'Manager ID'  FROM employee_db.employee;`
+    const sql = 
+        `SELECT e.id, e.firstName as 'First name', 
+        e.lastName as 'Last Name', r.title as 'Title', 
+        d.deptName as 'Department', r.salary as 'Salary', 
+        concat(m.firstName,' ', m.lastName) as 'Manager'
+        
+        FROM employee e
+        JOIN roles r
+	        ON e.roleID = r.id
+        JOIN department d
+	        ON r.deptID = d.id
+        LEFT JOIN employee m
+	        ON e.managerID = m.id`
 
     connection.query(sql, (err, rows) => {
         if (err) throw err
@@ -441,14 +453,18 @@ function viewByManager() {
 
             params.push(manager)
 
-            sql = `SELECT employee.id as 'Employee ID', 
-                          employee.firstName as 'First Name', 
-                          employee.lastName as 'Last Name', 
-                          employee.roleID as 'Role ID', 
-                          employee.managerID as 'Manager ID' 
-                    FROM employee_db.employee
-                    
-                    WHERE managerID = ?;`
+            sql = `
+            SELECT e.id, e.firstName as 'First name', 
+                e.lastName as 'Last Name', r.title as 'Title', 
+                d.deptName as 'Department', r.salary as 'Salary'
+                
+                FROM employee e
+                JOIN roles r
+                    ON e.roleID = r.id
+                JOIN department d
+                    ON r.deptID = d.id
+                
+                WHERE managerID = ?;`
 
             connection.query(sql, params, (err, res) => {
                 if (err) throw err
@@ -483,14 +499,20 @@ function viewByDept() {
 
             params.push(department)
 
-            const sql = `SELECT employee.id as 'Employee ID', 
-                          employee.firstName as 'First Name', 
-                          employee.lastName as 'Last Name', 
-                          employee.roleID as 'Role ID', 
-                          employee.managerID as 'Manager ID' 
-                    FROM employee_db.employee
+            const sql = `SELECT e.id, e.firstName as 'First name', 
+                e.lastName as 'Last Name', r.title as 'Title', 
+                r.salary as 'Salary', 
+                concat(m.firstName,' ', m.lastName) as 'Manager'
+                
+                FROM employee e
+                JOIN roles r
+                    ON e.roleID = r.id
+                JOIN department d
+                    ON r.deptID = d.id
+                LEFT JOIN employee m
+                    ON e.managerID = m.id
                     
-                    WHERE deptID = ?;`
+                WHERE r.deptID = ?;`
 
             connection.query(sql, params, (err, res) => {
                 if (err) throw err

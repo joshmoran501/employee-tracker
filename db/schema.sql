@@ -23,11 +23,9 @@ CREATE TABLE employee (
     firstName VARCHAR(50) NOT NULL,
 	lastName VARCHAR(50) NOT NULL,
     roleID INTEGER NOT NULL,
-    deptID INTEGER NOT NULL,
     managerID INTEGER,
     isManager BOOLEAN,
 
-    FOREIGN KEY (roleID) REFERENCES roles(id) ON DELETE CASCADE,
-    FOREIGN KEY (deptID) REFERENCES roles(deptID) ON DELETE CASCADE,
+    FOREIGN KEY (roleID, deptID) REFERENCES roles(id, deptID) ON DELETE CASCADE,
     FOREIGN KEY (managerID) REFERENCES employee(id) ON DELETE CASCADE
 );

@@ -13,11 +13,11 @@ VALUES
     (5, "Scaredy Cat", 50000, 2),
     (6, "Bumbling Baboon", 50000, 3);
     
-INSERT INTO employee (id, firstName, lastName, roleID, deptID, managerID, isManager)
+INSERT INTO employee (id, firstName, lastName, roleID, managerID, isManager)
 VALUES
-    (1, "Mu", "Fasa", 2, 2, NULL, TRUE),
-    (2, "King", "Kong", 3, 3, NULL, TRUE),
-    (3, "Air", "Bud", 1, 1, NULL, TRUE),
-    (4, "Bruiser", "Woods", 4, 1, 3, FALSE),
-    (5, "Uncle", "Scar", 5, 2, 1, FALSE),
-    (6, "Darwin", "Thornberry", 6, 3, 2, FALSE)
+    (1, "Mu", "Fasa", 2, NULL, TRUE),
+    (2, "King", "Kong", 3, NULL, TRUE),
+    (3, "Air", "Bud", 1, NULL, TRUE),
+    (4, "Bruiser", "Woods", 4, 3, FALSE),
+    (5, "Uncle", "Scar", 5, 1, FALSE),
+    (6, "Darwin", "Thornberry", 6, 2, FALSE)
